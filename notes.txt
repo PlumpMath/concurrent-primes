@@ -1,0 +1,30 @@
+concurrency: the composition of independently executing computations.  not the same as parallelism
+
+(<! ch)       receiving from ch   out of channel
+
+(>! ch val)  sending val to ch   into channel
+
+channels are for communication and synchronization
+
+(but there are buffered channels that don't have the synchronization piece)
+
+
+"Don't communicatie by sharing memory; share memory by communicating"
+
+
+Generator: fcn that returns a channel
+
+
+
+Hickey
+
+Good programs should be made of Processes and queues
+
+Communicating Scala Objects - threads one-to-one
+
+Channels are fundamentally blocking (during read and write)
+
+First Class Channels
+
+
+
