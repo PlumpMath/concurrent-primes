@@ -1,5 +1,5 @@
 (ns concurrent-primes.core
-  (:require [clojure.core.async :as async :refer [chan go <! >!]])
+  (:require [clojure.core.async :as async :refer [chan go <! >! go-loop]])
   (:gen-class :main true))
 
 ;;; concurrent prime sieve in Clojure using core.async
@@ -12,13 +12,6 @@
   `(go (loop []
          ~@body
          (recur))))
- 
- 
-(defmacro go-loop
-  "Like clojure.core/loop but runs in a go block."
-  [bindings & body]
-  `(go (loop ~bindings
-         ~@body)))
  
  
 (defn filter-chan
@@ -55,19 +48,6 @@
           (recur (inc i) nxt))))
     :ok))
 
-;; (sieve 20)
-
-(defn non-concurrent-sieve
-  ;; http://clojuredocs.org/clojure_core/clojure.core/lazy-seq#example_1000
-  ;; for reference
-  [s]
-  (cons (first s)
-        (lazy-seq (non-concurrent-sieve
-                   (filter #(pos? (rem % (first s))) (rest s))
-                                        ))))
-
-;; (take 20 (non-concurrent-sieve (iterate inc 2)))
-
 
 (defn my-generate
   []
@@ -88,8 +68,5 @@
 (defn -main [& args]
   (prn (format "args=%s" args))
   (if (not (empty? args))
-    (sieve (first args))))
-    ;; (do
-    ;;   (prn "blik")
-    ;;   (sieve (first args)))))
-
+    ;(my-sieve (Integer/parseInt (first args)))))
+    (sieve 10)))
